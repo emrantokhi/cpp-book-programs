@@ -39,22 +39,32 @@ int main()
 	cout << "Score: " << score << endl;
 
 	//Enum operation
-	enum difficulty {NOVICE, EASY, NORMAL, HARD, LEGEND};
-	difficulty myDiff = LEGEND;
+	enum class difficulty {NOVICE, EASY, NORMAL, HARD, LEGEND};
+	difficulty myDiff = difficulty::LEGEND;
 
-	enum shipCost { FIGHTER = 25, BOMBER, CRUISER = 50 };
-	shipCost myShip = BOMBER;
+	enum class strength {WEAK, STRONG, INVINCIBLE};
+	strength myStrength = strength::WEAK;
 
-	cout << "\nDifficulty: " << myDiff << endl;
+	enum class shipCost { FIGHTER = 25, BOMBER, CRUISER = 50 };
+	shipCost myShip = shipCost::BOMBER;
+
+	cout << "\nDifficulty: " << (int)myDiff << endl;
 	cout << "Difficulty size: " << sizeof(myDiff) << endl;
-	cout << "Easy Difficulty size: " << sizeof(NOVICE) << endl;
-	cout << "Difficulty - 1: " << myDiff - 1 << endl;
+	cout << "Easy Difficulty size: " << sizeof(difficulty::NOVICE) << endl;
+	cout << "Difficulty - 1: " << ((int)myDiff) - 1 << endl;
+	cout << "Fighter - 2: " << ((int)shipCost::FIGHTER) - 2 << endl;
 
-	cout << "My ship: " << myShip << endl;
-	cout << "Ship upgrade cost: " << CRUISER - myShip << endl;
+	cout << "My ship: " << ((int)myShip) << endl;
+	cout << "Ship upgrade cost: " << ((int)shipCost::CRUISER) - ((int)myShip) << endl;
 	cout << "Size of myShip: " << sizeof(myShip) << endl;
 	cout << "Size of Difficulty and shipCost: " << sizeof(difficulty) << ", " << sizeof(shipCost)
 		<< endl;
+	
+	cout << "\nStrength: " << ((int)myStrength) << endl;
+	if (((int)strength::WEAK) == ((int)difficulty::NOVICE))
+		cout << "Weak and novice are the same number but not comparable w/o cast!" << endl;
+	if (strength::WEAK < strength::STRONG)
+		cout << "Strength is comparable to strength w/o a cast";
 
 	return 0;
 }
