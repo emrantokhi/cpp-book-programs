@@ -1,11 +1,12 @@
 ﻿// GameOver.cpp 
 //Displays the words "Game Over!" on output.
 
+//preprocessor directives
 #include "GameOver.h"
 
 int main()
 {
-	std::cout << "Game Over!" << std::endl;
+	cout << "Game Over!" << endl;
 	
 	return 0;
 }
