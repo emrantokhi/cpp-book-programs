@@ -1,5 +1,5 @@
-﻿// GameOver.cpp : Defines the entry point for the application.
-//
+﻿// GameOver.cpp 
+//Displays the words "Game Over!" on output.
 
 #include "GameOver.h"
 
