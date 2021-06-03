@@ -9,22 +9,24 @@ using std::endl;
 
 int main()
 {
-	int difficulty;
+	int choice;
+
+	enum class difficulty { EASY, NORMAL, HARD };
 
 	cout << "Difficulty levels:\n" << endl;
-	cout << "1 - Easy\n2 - Normal\n3 - Hard\n" << endl;
+	cout << "0 - Easy\n1 - Normal\n2 - Hard\n" << endl;
 	cout << "Enter your choice: ";
 	
-	cin >> difficulty; 
+	cin >> choice; 
 	
-	switch (difficulty) {
-		case 1:
+	switch (choice) {
+		case static_cast<int>(difficulty::EASY):
 			cout << "You picked Easy." << endl;
 			break;
-		case 2: 
+		case static_cast<int>(difficulty::NORMAL) :
 			cout << "You picked Normal." << endl;
 			break;
-		case 3: 
+		case static_cast<int>(difficulty::HARD) :
 			cout << "You picked Hard." << endl;
 			break;
 		default:
