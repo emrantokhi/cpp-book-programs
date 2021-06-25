@@ -2,8 +2,7 @@
 // Demonstrating the use of an Array
 
 #include "HeroInventory.h"
-#include <iostream>
-#include <string>
+
 using namespace std;
 
 const int MAX_ITEMS = 20;
