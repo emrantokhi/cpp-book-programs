@@ -10,7 +10,7 @@ const int LEVELS = 5;
 int main()
 {
 	string guess;
-	string words[LEVELS] = { "model", "include", "pepperoni", "cheese", "computer" };
+	string words[LEVELS] = { "modelsh", "include", "pepperoni", "cheese", "computer" };
 	string hints[LEVELS] = {
 		"Someone who poses for a camera.",
 		"When you allow someone into your group.",
@@ -22,19 +22,31 @@ int main()
 	cout << "\t\tWord Jumble!" << endl;
 	cout << "Try to unjumble the letters and guess the word!" << endl;
 	cout << "If you need a hint, enter in 'hint'." << endl;
-	cout << "If you want to quit, enter in 'quit'.\n" << endl;
+	cout << "If you want to quit, enter in 'quit'." << endl;
 
 	//For loop is for looping through the levels
 	for (int level = 0; level < LEVELS; level++) {
-		srand(static_cast<unsigned int>(time(0))); //regenerate seed
+		//Regenerate the seed for each level
+		srand(static_cast<unsigned int>(time(0))); 
 		
-		string jumbled;
-		int word_size = words[level].size();
-		for (int letter_pos = 0; letter_pos < word_size; letter_pos++) {
-			
+		string jumbled = "";
+		string word = words[level];
+		//While loop to jumble the word
+		//It's inside for loop to get a random jumbling everytime
+		while (!word.empty()) {
+			//Get the size of the word
+			int word_size = word.size();
+			//Get a random position of the word
+			int random_pos = rand() % word_size;
+			//Concantenate the letter to jumbled
+			jumbled += word.at(random_pos);
+			//Erase the letter from the word so that next
+			//iteration can pick letters that have not been chosen
+			word.erase(random_pos, 1);
 		}
 
-		cout << "Level " << level + 1 << ":\n" << endl;
+		cout << "\nLevel " << level + 1 << ":\n" << endl;
+		cout << "Your word is: " << jumbled << "\n" << endl;
 
 		//While loop is for looping through guesses
 		while (guess != words[level]) {
@@ -47,7 +59,7 @@ int main()
 			}
 			else if (guess == "hint") {
 				//prints the hint for this level
-				cout << hints[level] << "\n" << endl;
+				cout << "HINT: " << hints[level] << "\n" << endl;
 			}
 		}
 
