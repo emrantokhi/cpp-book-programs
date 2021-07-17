@@ -11,6 +11,7 @@ int main()
 {
 	string guess;
 	int level;
+	/*
 	string words[LEVELS] = { "model", "include", "pepperoni", "cheese", "computer" };
 	string hints[LEVELS] = {
 		"Someone who poses for a camera.",
@@ -19,7 +20,19 @@ int main()
 		"Dairy product.",
 		"What you are most likely using to play this game."
 	};
+	*/
 
+	enum fields{WORD, HINT, NUM_FIELDS};
+	//row field will give you the level
+	//col field will give you if you want a hint or a word
+	string words[LEVELS][NUM_FIELDS] = {
+		{"model", "Someone who poses for a camera."},
+		{"include", "When you allow someone into your group."},
+		{"pepperoni", "Topping on a pizza."},
+		{"cheese", "Dairy product."},
+		{"computer", "What you are most likely using to play this game."}
+	};
+	
 	cout << "\t\tWord Jumble!" << endl;
 	cout << "Try to unjumble the letters and guess the word!" << endl;
 	cout << "If you need a hint, enter in 'hint'." << endl;
@@ -31,7 +44,7 @@ int main()
 		srand(static_cast<unsigned int>(time(0))); 
 		
 		string jumbled = "";
-		string word = words[level];
+		string word = words[level][WORD];
 		//While loop to jumble the word
 		//It's inside for loop to get a random jumbling everytime
 		while (!word.empty()) {
@@ -50,7 +63,7 @@ int main()
 		cout << "Your word is: " << jumbled << "\n" << endl;
 
 		//While loop is for looping through guesses
-		while (guess != words[level]) {
+		while (guess != words[level][WORD]) {
 			cout << "Your guess: ";
 			cin >> guess;
 
@@ -60,7 +73,7 @@ int main()
 			}
 			else if (guess == "hint") {
 				//prints the hint for this level
-				cout << "HINT: " << hints[level] << "\n" << endl;
+				cout << "HINT: " << words[level][HINT] << "\n" << endl;
 			}
 		}
 
