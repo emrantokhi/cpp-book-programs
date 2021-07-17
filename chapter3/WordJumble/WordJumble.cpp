@@ -10,7 +10,8 @@ const int LEVELS = 5;
 int main()
 {
 	string guess;
-	string words[LEVELS] = { "modelsh", "include", "pepperoni", "cheese", "computer" };
+	int level;
+	string words[LEVELS] = { "model", "include", "pepperoni", "cheese", "computer" };
 	string hints[LEVELS] = {
 		"Someone who poses for a camera.",
 		"When you allow someone into your group.",
@@ -25,7 +26,7 @@ int main()
 	cout << "If you want to quit, enter in 'quit'." << endl;
 
 	//For loop is for looping through the levels
-	for (int level = 0; level < LEVELS; level++) {
+	for (level = 0; level < LEVELS; level++) {
 		//Regenerate the seed for each level
 		srand(static_cast<unsigned int>(time(0))); 
 		
@@ -67,6 +68,19 @@ int main()
 		if (guess == "quit") {
 			break;
 		}
+		else {
+			cout << "\nAwesome guess! You got it right!" << endl;
+		}
+	}
+	
+	if (guess == "quit") {
+		cout << "\nAwwh, you almost had it! You made it to level: " << level 
+			<< " out of " << LEVELS << " total levels." << endl;
+		cout << "That's " << (level / (LEVELS + 0.0)) * 100 << "% of the game!" << endl;
+		cout << "Try again next time!" << endl;
+	}
+	else {
+		cout << "\nCongrats! You beat the game and all of its levels! You must be a genius!" << endl;
 	}
 	return 0;
 }
