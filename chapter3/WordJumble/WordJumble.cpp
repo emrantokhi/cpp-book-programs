@@ -6,11 +6,14 @@
 using namespace std;
 
 const int LEVELS = 5;
+const int GAIN_POINTS = 5;
+const int LOSE_POINTS = 2;
 
 int main()
 {
 	string guess;
 	int level;
+	int score = 0;
 	/*
 	string words[LEVELS] = { "model", "include", "pepperoni", "cheese", "computer" };
 	string hints[LEVELS] = {
@@ -34,8 +37,9 @@ int main()
 	};
 	
 	cout << "\t\tWord Jumble!" << endl;
-	cout << "Try to unjumble the letters and guess the word!" << endl;
-	cout << "If you need a hint, enter in 'hint'." << endl;
+	cout << "Try to unjumble the letters and guess the word to get "<< GAIN_POINTS << " points!" << endl;
+	cout << "If you want to see your score, enter in 'score'." << endl;
+	cout << "If you need a hint, enter in 'hint' (you'll lose " << LOSE_POINTS << " points!)." << endl;
 	cout << "If you want to quit, enter in 'quit'." << endl;
 
 	//For loop is for looping through the levels
@@ -60,6 +64,7 @@ int main()
 		}
 
 		cout << "\nLevel " << level + 1 << ":\n" << endl;
+		cout << "Score: " << score << endl;
 		cout << "Your word is: " << jumbled << "\n" << endl;
 
 		//While loop is for looping through guesses
@@ -73,7 +78,11 @@ int main()
 			}
 			else if (guess == "hint") {
 				//prints the hint for this level
+				score -= LOSE_POINTS;
 				cout << "HINT: " << words[level][HINT] << "\n" << endl;
+			}
+			else if (guess == "score") {
+				cout << "Score: " << score << "\n" << endl;
 			}
 		}
 
@@ -82,7 +91,8 @@ int main()
 			break;
 		}
 		else {
-			cout << "\nAwesome guess! You got it right!" << endl;
+			score += GAIN_POINTS;
+			cout << "\nAwesome guess! You got it right! Score: " << score << endl;
 		}
 	}
 	
@@ -90,10 +100,12 @@ int main()
 		cout << "\nAwwh, you almost had it! You made it to level: " << level 
 			<< " out of " << LEVELS << " total levels." << endl;
 		cout << "That's " << (level / (LEVELS + 0.0)) * 100 << "% of the game!" << endl;
+		cout << "Final score: " << score << " out of " << GAIN_POINTS * LEVELS << endl; 
 		cout << "Try again next time!" << endl;
 	}
 	else {
 		cout << "\nCongrats! You beat the game and all of its levels! You must be a genius!" << endl;
+		cout << "Final score: " << score << " out of " << GAIN_POINTS * LEVELS << endl;
 	}
 	return 0;
 }
