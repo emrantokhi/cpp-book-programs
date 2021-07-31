@@ -55,10 +55,12 @@ int main()
 		if ((guess.size() < 2) && (values_not_found.find(guess.at(0), 0) != string::npos)) {
 			for (int i = 0; i < answer.size(); i++) {
 				if (tolower(answer.at(i)) == guess.at(0)) {
-					guessed_values.erase(i, i + 1);
-					guessed_values.insert(i, guess);
 					size_t pos = values_not_found.find(guess.at(0), 0);
-					values_not_found.erase(pos, pos + 1);
+					if (pos != string::npos) {
+						values_not_found.erase(pos, 1);
+					}
+					guessed_values.erase(i, 1);
+					guessed_values.insert(i, guess);
 				}
 			}
 			cout << values_not_found << endl;
