@@ -5,6 +5,18 @@
 
 using namespace std;
 
+bool ignoreCaseEquals(const string& a, const string& b) {
+	if (a.size() != b.size()) {
+		return false;
+	}
+	for (unsigned int i = 0; i < a.size(); i++) {
+		if (tolower(a.at(i)) != tolower(b.at(i))) {
+			return false;
+		}
+	}
+	return true;
+}
+
 int main()
 {
 	vector<string> words;
@@ -15,12 +27,13 @@ int main()
 	words.push_back("Deus Ex");
 
 	int score;
+	unsigned int word_chosen;
+	bool win = false;
 	string guess;
 	string answer;
 	string values_not_found = "";
 	string guessed_values = "";
 
-	unsigned int word_chosen;
 
 	//srand(static_cast<unsigned int>(time(0)));
 	//number between [0, words.size) (noninclusive)
@@ -47,12 +60,15 @@ int main()
 	cout << "\t\tWelcome to Hangman!" << endl;
 	cout << "Guess a letter or the entire word and press enter!" << endl;
 	
-	while (values_not_found.size() > 0 || guess != "exit") {
+	while (values_not_found.size() > 0 && guess != "exit") {
 		cout << "\nYour word is: \n\n" << guessed_values << endl;
 		cout << "\nEnter a letter or the entire text: ";
-		cin >> guess;
+		getline(cin, guess);
 
-		if ((guess.size() < 2) && (values_not_found.find(guess.at(0), 0) != string::npos)) {
+		if (guess == "exit") {
+			break;
+		}
+		else if ((guess.size() < 2) && (values_not_found.find(guess.at(0), 0) != string::npos)) {
 			for (int i = 0; i < answer.size(); i++) {
 				if (tolower(answer.at(i)) == guess.at(0)) {
 					size_t pos = values_not_found.find(guess.at(0), 0);
@@ -66,22 +82,11 @@ int main()
 			cout << "Great guess, " << guess << " was in the word!" << endl;
 		}
 		else if ((guess.size() >= 2) && (ignoreCaseEquals(answer, guess))) {
-
+			values_not_found = "";
+			cout << "Wow! That was an amazing guess, you just got the whole word!" << endl;
 		}
 
 	}
 
 	return 0;
-}
-
-bool ignoreCaseEquals(const string& a, const string& b) {
-	if (a.size() != b.size()) {
-		return false;
-	}
-	for (unsigned int i = 0; i < a.size(); i++) {
-		if (a.at(i) != b.at(i)) {
-			return false;
-		}
-	}
-	return true;
 }
