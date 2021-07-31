@@ -1,0 +1,29 @@
+Include: 
+vector
+string
+iostream
+ctime
+cstdlib
+
+Create a vector of words
+Create a string that holds the guess
+Create a string that holds the answer
+Create a string that holds the amount of letters
+Randomly choose a word to use as the problem
+Assign random choice to answer
+Display the amount of letters in the word
+
+Loop
+	Ask for input
+	If guess is greater than 1 character and is correct
+		Add score + bonus
+		Break out of the loop
+	If letter is in the word
+		Add score
+		Display the correctly guessed letter in the correct spot
+ 	Else 
+		Display that guess was incorrect
+		Subtract point
+End loop
+
+Thank for playing
