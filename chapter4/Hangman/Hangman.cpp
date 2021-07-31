@@ -49,7 +49,7 @@ int main()
 	
 	while (values_not_found.size() > 0 || guess != "exit") {
 		cout << "\nYour word is: \n\n" << guessed_values << endl;
-		cout << "\nEnter a letter or a whole word: ";
+		cout << "\nEnter a letter or the entire text: ";
 		cin >> guess;
 
 		if ((guess.size() < 2) && (values_not_found.find(guess.at(0), 0) != string::npos)) {
@@ -63,11 +63,25 @@ int main()
 					guessed_values.insert(i, guess);
 				}
 			}
-			cout << values_not_found << endl;
 			cout << "Great guess, " << guess << " was in the word!" << endl;
+		}
+		else if ((guess.size() >= 2) && (ignoreCaseEquals(answer, guess))) {
+
 		}
 
 	}
 
 	return 0;
+}
+
+bool ignoreCaseEquals(const string& a, const string& b) {
+	if (a.size() != b.size()) {
+		return false;
+	}
+	for (unsigned int i = 0; i < a.size(); i++) {
+		if (a.at(i) != b.at(i)) {
+			return false;
+		}
+	}
+	return true;
 }
