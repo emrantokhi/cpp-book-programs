@@ -26,7 +26,7 @@ int main()
 	words.push_back("Kingdom Hearts");
 	words.push_back("Deus Ex");
 
-	int score = 0;
+	int score = 5;
 	//for the random value to choose a word
 	unsigned int word_chosen;
 	//win is to show status of the game
@@ -69,10 +69,12 @@ int main()
 		"have not been revealed times 3 when making a full text guess correctly!\n" << endl;
 	cout << "You lose -1 points for every wrong letter guess,\nand lose points equal"
 		"to however many letters are not revealed for wrong full text guesses.\n" << endl;
+	cout << "You start with 5 points!" << endl;
+	cout << "If you have negative points, you'll be hung!\n" << endl;
 	cout << "You can exit the game by simply typing in 'exit'! Good luck!" << endl;
 	
 	//When all v_n_f are found, letters are removed from it when guessed correctly
-	while (values_not_found.size() > 0 && guess != "exit") {
+	while ((values_not_found.size() > 0) && (guess != "exit") && (score >= 0)) {
 		cout << "\nScore: " << score << endl;
 		cout << "\nYour word is: \n\n" << guessed_values << endl;
 		cout << "\nEnter a letter or the entire text: ";
@@ -125,7 +127,7 @@ int main()
 		cout << "\nGood moves, player! You got a score of: " << score << endl;
 	}
 	else {
-		cout << "\nTry again next time, I'm sure you can get it!" << endl;
+		cout << "\nOh no! You were hung! x.x Try again next time! Score: " << score << endl;
 	}
 
 	return 0;
