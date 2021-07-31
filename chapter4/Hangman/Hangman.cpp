@@ -63,7 +63,13 @@ int main()
 	}
 
 	cout << "\t\tWelcome to Hangman!" << endl;
-	cout << "Guess a letter or the entire word and press enter!" << endl;
+	cout << "Guess a letter or the entire word and press enter!\n" << endl;
+	cout << "You gain 2 points for correct 1 letter guesses.\n" << endl;
+	cout << "You gain points equal to how ever many letters that\n"
+		"have not been revealed times 3 when making a full text guess correctly!\n" << endl;
+	cout << "You lose -1 points for every wrong letter guess,\nand lose points equal"
+		"to however many letters are not revealed for wrong full text guesses.\n" << endl;
+	cout << "You can exit the game by simply typing in 'exit'! Good luck!" << endl;
 	
 	//When all v_n_f are found, letters are removed from it when guessed correctly
 	while (values_not_found.size() > 0 && guess != "exit") {
@@ -100,7 +106,7 @@ int main()
 			score += values_not_found.size() * 3;
 			values_not_found = ""; //set the not found values to nothing for win con
 			win = true; 
-			cout << "Wow! That was an amazing guess, you just got the whole thing!"
+			cout << "Wow! That was an amazing guess, you just got the whole thing! "
 				"You get 3 points for every letter that wasn't revealed!" << endl;
 		}
 		//if guesses are wrong
