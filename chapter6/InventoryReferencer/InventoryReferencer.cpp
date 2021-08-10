@@ -3,6 +3,7 @@
 
 #include "InventoryReferencer.h"
 
+//to make sure these references cant be used to change, make string& -> const string&
 std::string& refToElement(std::vector<std::string>& inventory, int i);
 
 int main()
