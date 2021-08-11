@@ -189,7 +189,7 @@ void printBoard(const std::vector<char>& board) {
 }
 
 //Give function position to put piece on board (only be called if legalMove() is true)
-void occupySpot(std::vector<char>& board, int pos, char game_piece) {
+inline void occupySpot(std::vector<char>& board, int pos, char game_piece) {
 	board[pos] = game_piece;
 }
 
@@ -202,7 +202,7 @@ bool emptySpot(const std::vector<char>& board, int pos) {
 }
 
 //Function only allowed to check if the move is legal (read only)
-bool legalMove(const std::vector<char>& board, int pos) {
+inline bool legalMove(const std::vector<char>& board, int pos) {
 	//if the number is higher than 8 or lower than 0, false
 	if ((pos < 0) || (pos > 8)) {
 		std::cout << "That's not a valid move." << std::endl;
