@@ -4,7 +4,7 @@
 #include "TicTacToeRef.h"
 
 void printWelcome();
-void printExit();
+void printExit(char winCon, char player, char computer);
 bool askFirstOrNot();
 void initializeBoard(std::vector<char>& board);
 void printBoard(const std::vector<char>& board);
@@ -12,7 +12,18 @@ void occupySpot(std::vector<char>& board, int pos, char game_piece);
 bool legalMove(const std::vector<char>& board, int pos);
 int askForMove(const std::vector<char>& board);
 int computerMove(const std::vector<char>& board);
-char checkWinCon(const std::vector<char>& board);
+char checkWinCon(const std::vector<char>& board, int remainingPositions);
+
+const int WINNING_ROWS[8][3] = { 
+	{0, 1, 2},
+	{3, 4, 5},
+	{6, 7, 8},
+	{0, 3, 6},
+	{1, 4, 7},
+	{2, 5, 8},
+	{0, 4, 8},
+	{2, 4, 6} };
+const int TOTAL_WIN_ROWS = 8;
 
 int main()
 {
@@ -20,6 +31,7 @@ int main()
 	char player;
 	char computer;
 	char winCon;
+	int remainingPositions = 9;
 	
 	initializeBoard(board);
 	printWelcome();
@@ -42,30 +54,62 @@ int main()
 	do {
 		//If the player goes first
 		if (playerFirst) {
+			//Players move
 			//askforMove checks move with legalMove()
 			int playerChoice = askForMove(board);
 			occupySpot(board, playerChoice, player);
+			
+			remainingPositions--;
+			
 			std::cout << "\nYour move:\n" << std::endl;
 			printBoard(board);
+
+			//Have to check winCon after the first player's turn
+			winCon = checkWinCon(board, remainingPositions);
+			if ((winCon == 'X') || (winCon == 'O') || (winCon == 'T')) {
+				break;
+			}
+
+			//Opponent's move
 			int computerChoice = computerMove(board);
 			occupySpot(board, computerChoice, computer);
+
+			remainingPositions--;
+			
 			std::cout << "\nYour opponent's move:\n" << std::endl;
 			printBoard(board);
 		}
 		else {
+			//Opponent's move
 			int computerChoice = computerMove(board);
 			occupySpot(board, computerChoice, computer);
+
+			remainingPositions--;
+			
 			std::cout << "\nYour opponent's move:\n" << std::endl;
 			printBoard(board);
+			
+			//Have to check winCon after the first player's turn
+			winCon = checkWinCon(board, remainingPositions);
+			if ((winCon == 'X') || (winCon == 'O') || (winCon == 'T')) {
+				break;
+			}
+
+			//Player's move
 			int playerChoice = askForMove(board);
 			occupySpot(board, playerChoice, player);
+
+			remainingPositions--;
+			
 			std::cout << "\nYour move:\n" << std::endl;
 			printBoard(board);
 		}
-		winCon = checkWinCon(board);
-	} while (winCon == '0');
+		//Check winCon for second player
+		winCon = checkWinCon(board, remainingPositions);
+	} while (winCon == 'N');
 
-	
+	//Print out win statement
+	printExit(winCon, player, computer);
 }
 
 void printWelcome() {
@@ -77,8 +121,16 @@ void printWelcome() {
 	std::cout << std::endl;
 }
 
-void printExit() {
-
+void printExit(char winCon, char player, char computer) {
+	if (winCon == player) {
+		std::cout << "\nCongrats! You just beat the computer! You're a genius!!!! See if you can do it again!" << std::endl;
+	}
+	else if (winCon == computer) {
+		std::cout << "\nAwwwh I'm sorry! The computer won this time but...you can do it! Give it another try!" << std::endl;
+	}
+	else {
+		std::cout << "\nWoah...looks like you're evenly matched with a computer! It was a tie, try again after to see if you can outsmart it!" << std::endl;
+	}
 }
 
 bool askFirstOrNot() {
@@ -140,13 +192,16 @@ void occupySpot(std::vector<char>& board, int pos, char game_piece) {
 
 //Function only allowed to check if the move is legal (read only)
 bool legalMove(const std::vector<char>& board, int pos) {
+	//if the number is higher than 8 or lower than 0, false
 	if ((pos < 0) || (pos > 8)) {
 		std::cout << "That's not a valid move." << std::endl;
 		return false;
 	}
+	//if the board position is not taken, true
 	else if ((board[pos] != 'X') && (board[pos] != 'O')) {
 		return true;
 	}
+	//if it is taken, false
 	else {
 		std::cout << "That's not a valid move." << std::endl;
 		return false;
@@ -156,6 +211,7 @@ bool legalMove(const std::vector<char>& board, int pos) {
 //Determine the player's move
 int askForMove(const std::vector<char>& board) {
 	int pos;
+	//get a legal position
 	do {
 		std::cout << "\nWhat position would you like to put your piece in? (0-8): ";
 		std::cin >> pos;
@@ -169,7 +225,26 @@ int computerMove(const std::vector<char>& board) {
 }
 
 //Check if there have been any winning moves, and return the char of the winner,  else return 0
-char checkWinCon(const std::vector<char>& board) {
-	return '0';
+char checkWinCon(const std::vector<char>& board, int remainingPositions) {
+	//Return 'T' for Tie if there are no more remaining spots on the board
+	if (remainingPositions == 0) {
+		return 'T';
+	}
+	//Check all the Winning rows to see if there is a winner
+	for (int row = 0; row < TOTAL_WIN_ROWS; row++) {
+		//Grab the winning conditions and do a check
+		char pos0 = WINNING_ROWS[row][0];
+		char pos1 = WINNING_ROWS[row][1];
+		char pos2 = WINNING_ROWS[row][2];
+		if ((pos0 == 'X') && (pos1 == 'X') && (pos2 == 'X')) {
+			return 'X';
+		}
+		else if ((pos0 == 'O') && (pos1 == 'O') && (pos2 == 'O')) {
+			return 'O';
+		}
+		else {
+			return 'N';
+		}
+	}
 }
 
