@@ -31,7 +31,9 @@ int main()
 	std::vector<char> board;
 	char player;
 	char computer;
+	//will be 'T' for tie, 'X' or 'O' for winner, 'N' for no status
 	char winCon;
+	//there are only a maximum of 9 moves, if 0 then board full
 	int remainingPositions = 9;
 	
 	initializeBoard(board);
