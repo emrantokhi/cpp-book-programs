@@ -9,9 +9,10 @@ bool askFirstOrNot();
 void initializeBoard(std::vector<char>& board);
 void printBoard(const std::vector<char>& board);
 void occupySpot(std::vector<char>& board, int pos, char game_piece);
+bool emptySpot(const std::vector<char>& board, int pos);
 bool legalMove(const std::vector<char>& board, int pos);
 int askForMove(const std::vector<char>& board);
-int computerMove(const std::vector<char>& board);
+int computerMove(const std::vector<char>& board, char player, char computer);
 char checkWinCon(const std::vector<char>& board, int remainingPositions);
 
 const int WINNING_ROWS[8][3] = { 
@@ -42,14 +43,14 @@ int main()
 	if (playerFirst) {
 		player = 'X';
 		computer = 'O';
-		std::cout << "player goes first";
 	}
 	else {
 		player = 'O';
 		computer = 'X';
-		std::cout << "player goes second";
 	}
 
+	std::cout << "\nYou're the " << player << "'s!" << std::endl;
+	std::cout << "Your opponent is the " << computer << "'s!" << std::endl;
 	
 	do {
 		//If the player goes first
@@ -71,7 +72,7 @@ int main()
 			}
 
 			//Opponent's move
-			int computerChoice = computerMove(board);
+			int computerChoice = computerMove(board, player, computer);
 			occupySpot(board, computerChoice, computer);
 
 			remainingPositions--;
@@ -81,7 +82,7 @@ int main()
 		}
 		else {
 			//Opponent's move
-			int computerChoice = computerMove(board);
+			int computerChoice = computerMove(board, player, computer);
 			occupySpot(board, computerChoice, computer);
 
 			remainingPositions--;
@@ -190,6 +191,14 @@ void occupySpot(std::vector<char>& board, int pos, char game_piece) {
 	board[pos] = game_piece;
 }
 
+//Check if the spot given is empty
+bool emptySpot(const std::vector<char>& board, int pos) {
+	if ((board[pos] != 'X') && (board[pos] != 'O')) {
+		return true;
+	}
+	return false;
+}
+
 //Function only allowed to check if the move is legal (read only)
 bool legalMove(const std::vector<char>& board, int pos) {
 	//if the number is higher than 8 or lower than 0, false
@@ -220,31 +229,76 @@ int askForMove(const std::vector<char>& board) {
 }
 
 //Determine the computer's next position
-int computerMove(const std::vector<char>& board) {
-	return 1;
+int computerMove(const std::vector<char>& board, char player, char computer) {
+	//Moves in order of priority
+	for (int row = 0; row < TOTAL_WIN_ROWS; row++) {
+		//Grab the winning conditions and do a check
+		char pos0 = WINNING_ROWS[row][0];
+		char pos1 = WINNING_ROWS[row][1];
+		char pos2 = WINNING_ROWS[row][2];
+		//Take the winning spot -Top priority
+		if ((emptySpot(board, pos0) && (board[pos0] == computer) && (board[pos1] == computer))) {
+			return WINNING_ROWS[row][2];
+		}
+		else if ((emptySpot(board, pos0) && (board[pos0] == computer) && (board[pos2] == computer))) {
+			return WINNING_ROWS[row][1];
+		}
+		else if ((emptySpot(board, pos0) && (board[pos1] == computer) && (board[pos2] == computer))) {
+			return WINNING_ROWS[row][0];
+		}
+		//Check if player can win, if they can take winning spot -second priority
+		else if ((emptySpot(board, pos0) && (board[pos0] == player) && (board[pos1] == player))) {
+			return WINNING_ROWS[row][2];
+		}
+		else if ((emptySpot(board, pos0) && (board[pos0] == player) && (board[pos2] == player))) {
+			return WINNING_ROWS[row][1];
+		}
+		else if ((emptySpot(board, pos0) && (board[pos1] == player) && (board[pos2] == player))) {
+			return WINNING_ROWS[row][0];
+		}
+	}
+	//If none of those are possible, then take next best spot
+	//Take the center -third priority
+	if ((emptySpot(board, 4))) {
+		return 4;
+	}
+
+	//The corners are even numbers other than 4 -fourth priority
+	for (int i = 0; i < board.size(); i += 2) {
+		//Take the rest of the squares
+		if ((emptySpot(board, i))) {
+			return i;
+		}
+	}
+	//The rest of the squares are odd numbers -fifth priority
+	for (int i = 1; i < board.size(); i+=2) {
+		//Take the rest of the squares
+		if ((emptySpot(board, i))) {
+			return i;
+		}
+	}
+
 }
 
 //Check if there have been any winning moves, and return the char of the winner,  else return 0
 char checkWinCon(const std::vector<char>& board, int remainingPositions) {
-	//Return 'T' for Tie if there are no more remaining spots on the board
-	if (remainingPositions == 0) {
-		return 'T';
-	}
 	//Check all the Winning rows to see if there is a winner
 	for (int row = 0; row < TOTAL_WIN_ROWS; row++) {
 		//Grab the winning conditions and do a check
 		char pos0 = WINNING_ROWS[row][0];
 		char pos1 = WINNING_ROWS[row][1];
 		char pos2 = WINNING_ROWS[row][2];
-		if ((pos0 == 'X') && (pos1 == 'X') && (pos2 == 'X')) {
+		if ((board[pos0] == 'X') && (board[pos1] == 'X') && (board[pos2] == 'X')) {
 			return 'X';
 		}
-		else if ((pos0 == 'O') && (pos1 == 'O') && (pos2 == 'O')) {
+		else if ((board[pos0] == 'O') && (board[pos1] == 'O') && (board[pos2] == 'O')) {
 			return 'O';
 		}
-		else {
-			return 'N';
-		}
 	}
+	//Return 'T' for Tie if there are no more remaining spots on the board
+	if (remainingPositions == 0) {
+		return 'T';
+	}
+	return 'N';
 }
 

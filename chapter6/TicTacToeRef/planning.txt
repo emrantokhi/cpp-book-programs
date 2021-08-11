@@ -10,6 +10,7 @@ askFirstOrNot() -bool
 initializeBoard() -void
 printBoard() -void
 occupySpot() -void
+emptySpot() -bool
 legalMove() -bool
 askForMove() - int
 computerChoice() -int
