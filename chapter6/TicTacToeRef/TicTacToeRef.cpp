@@ -10,6 +10,7 @@ void initializeBoard(std::vector<char>& board);
 void printBoard(const std::vector<char>& board);
 void occupySpot(std::vector<char>& board, int pos, char game_piece);
 bool legalMove(const std::vector<char>& board, int pos);
+int askForMove(const std::vector<char>& board);
 int computerMove(const std::vector<char>& board);
 char checkWinCon(const std::vector<char>& board);
 
@@ -18,6 +19,7 @@ int main()
 	std::vector<char> board;
 	char player;
 	char computer;
+	char winCon;
 	
 	initializeBoard(board);
 	printWelcome();
@@ -36,21 +38,43 @@ int main()
 		std::cout << "player goes second";
 	}
 
-	/*
-	while (checkWinCon() == '0') {
+	
+	do {
+		//If the player goes first
 		if (playerFirst) {
-
+			//askforMove checks move with legalMove()
+			int playerChoice = askForMove(board);
+			occupySpot(board, playerChoice, player);
+			std::cout << "\nYour move:\n" << std::endl;
+			printBoard(board);
+			int computerChoice = computerMove(board);
+			occupySpot(board, computerChoice, computer);
+			std::cout << "\nYour opponent's move:\n" << std::endl;
+			printBoard(board);
 		}
 		else {
-
+			int computerChoice = computerMove(board);
+			occupySpot(board, computerChoice, computer);
+			std::cout << "\nYour opponent's move:\n" << std::endl;
+			printBoard(board);
+			int playerChoice = askForMove(board);
+			occupySpot(board, playerChoice, player);
+			std::cout << "\nYour move:\n" << std::endl;
+			printBoard(board);
 		}
-	} */
+		winCon = checkWinCon(board);
+	} while (winCon == '0');
 
 	
 }
 
 void printWelcome() {
-
+	std::cout << "Welcome to:\n\t\tTic-Tac-Toe!\n" << std::endl;
+	std::cout << "Here you will be going toe to toe with a computer!" << std::endl;
+	std::cout << "Think you got what it takes to win? Here are the instructions:" << std::endl;
+	std::cout << "You will be able to choose your spot by entering a position 0-8, of which will "
+		<< "correspond to the board as shown:" << std::endl;
+	std::cout << std::endl;
 }
 
 void printExit() {
@@ -111,12 +135,32 @@ void printBoard(const std::vector<char>& board) {
 
 //Give function position to put piece on board (only be called if legalMove() is true)
 void occupySpot(std::vector<char>& board, int pos, char game_piece) {
-
+	board[pos] = game_piece;
 }
 
 //Function only allowed to check if the move is legal (read only)
 bool legalMove(const std::vector<char>& board, int pos) {
-	return true;
+	if ((pos < 0) || (pos > 8)) {
+		std::cout << "That's not a valid move." << std::endl;
+		return false;
+	}
+	else if ((board[pos] != 'X') && (board[pos] != 'O')) {
+		return true;
+	}
+	else {
+		std::cout << "That's not a valid move." << std::endl;
+		return false;
+	}
+}
+
+//Determine the player's move
+int askForMove(const std::vector<char>& board) {
+	int pos;
+	do {
+		std::cout << "\nWhat position would you like to put your piece in? (0-8): ";
+		std::cin >> pos;
+	} while (!legalMove(board, pos));
+	return pos;
 }
 
 //Determine the computer's next position
@@ -126,6 +170,6 @@ int computerMove(const std::vector<char>& board) {
 
 //Check if there have been any winning moves, and return the char of the winner,  else return 0
 char checkWinCon(const std::vector<char>& board) {
-	return 'c';
+	return '0';
 }
 

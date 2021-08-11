@@ -11,7 +11,8 @@ initializeBoard() -void
 printBoard() -void
 occupySpot() -void
 legalMove() -bool
-computerMove() -int
+askForMove() - int
+computerChoice() -int
 checkWinCon() -char
 
 main()
