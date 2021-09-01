@@ -1,0 +1,29 @@
+What I need:
+The board
+vector of size 9 to store the board
+
+
+functions declarations:
+welcome()    -void
+exitScreen() -void
+askFirstOrNot() -bool
+initializeBoard() -void
+printBoard() -void
+occupySpot() -void
+emptySpot() -bool
+legalMove() -bool
+askForMove() - int
+computerChoice() -int
+checkWinCon() -char
+
+main()
+print welcome
+print out the board
+ask if want to go first or not
+GAME LOOP -while no ones won and its not a tie
+	first player chooses (in this case, AI goes first)
+	check win con
+	second player chooses
+	check win con
+GAME LOOP DONE
+print end screen
