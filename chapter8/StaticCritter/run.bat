@@ -1,0 +1,2 @@
+StaticCritter
+pause
