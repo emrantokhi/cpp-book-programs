@@ -1,0 +1,95 @@
+Pet Caretaker
+Must keep pet happy
+----------------------------------------------------
+Pet will have hunger, energy, mood meters
+
+Happy
+--------------------------------------
+
+Food makes Hunger +++, energy +, mood++
+
+Sleep makes Hunger ---, energy+++, mood+
+
+Play(fetch) makes mood+++, energy---, hunger---
+
+Walk makes mood++, energy --, hunger --
+
+--------------------------------------
+Meh
+--------------------------------------
+Food makes Hunger +++, energy +, mood+
+
+Sleep makes Hunger ---, energy+++
+
+Play(fetch) makes mood++, energy---, hunger---
+
+Walk makes mood+, energy --, hunger --
+--------------------------------------
+Sad
+--------------------------------------
+Food makes Hunger +++, energy +, mood+
+
+Sleep makes Hunger ---, energy+++, mood-
+
+Play(fetch) makes mood+, energy---, hunger---
+
+Walk makes energy --, hunger --
+
+----------------------------------------------------- 
+
+hunger, energy, mood all start at 100 int
+
+Dog class
+
+private:
+	int hunger
+	int energy
+	int mood
+	string name
+	
+	//mood modifiers will adjust how much mood is gained
+	static int happyMoodModifiers
+	static int badMoodModifiers
+	static int mehMoodModifiers
+	
+public
+	get/set hunger, mood, energy, name
+	get modifiers
+	eat()
+	sleep()
+	fetch()
+	walk()
+	printStats()
+	checkMood() //should be called in each activity function, adjusts modifiers
+	checkLoss() //check if any stat is too low
+	Dog(hunger, mood, energy) (constructor)
+-----------------------------------------------------
+void doActivity(Dog &pet)
+int checkStats(Dog &pet)
+
+main class:
+
+introduce game
+name pet
+GameLoop:
+	pet.printStats();
+	ask what activity
+	doActivity(pet, activity);
+	subtract mood
+	if(checkStats(pet) == 1,2,or 3)
+		exit game loop (loss)
+main class done.
+
+doActivity function:
+if(activity = 1) 
+	pet.eat()
+else if (activity = 2)
+	pet.sleep()
+...
+else
+	pet.walk()
+doActivity end
+
+checkStats function:
+	return pet.checkLoss()
+checkStats end		
