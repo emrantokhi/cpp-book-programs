@@ -57,6 +57,17 @@ void Dog::setName(std::string name) {
 
 //Change the modifier based on mood
 void Dog::checkMood() {
+	int totalMood = hunger + energy + mood;
+	if (totalMood <= 300 && totalMood > 200) {
+		modifier = S_HAPPY_MOD;
+	}
+	else if (totalMood <= 200 && totalMood > 100) {
+		modifier = S_MEH_MOD;
+	}
+	else if (totalMood <= 100 && totalMood >= 0) {
+		modifier = S_SAD_MOD;
+	}
+	/*
 	if (mood <= 100 && mood > 75) {
 		modifier = S_HAPPY_MOD;
 	}
@@ -66,6 +77,7 @@ void Dog::checkMood() {
 	else if (mood <= 45 && mood >= 0) {
 		modifier = S_SAD_MOD;
 	}
+	*/
 }
 
 //Make sure stats are always between 0 and 100
