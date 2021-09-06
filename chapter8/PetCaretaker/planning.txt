@@ -6,13 +6,13 @@ Pet will have hunger, energy, mood meters
 Happy
 --------------------------------------
 
-Food makes Hunger +++, energy +, mood++
+Food makes Hunger +++, energy +
 
-Sleep makes Hunger ---, energy+++, mood+
+Sleep makes Hunger ---, energy+++, mood++
 
-Play(fetch) makes mood+++, energy---, hunger---
+Play(fetch) makes mood+, energy---, hunger---
 
-Walk makes mood++, energy --, hunger --
+Walk makes mood+, energy --, hunger --
 
 --------------------------------------
 Meh
@@ -31,13 +31,14 @@ Food makes Hunger +++, energy +, mood+
 
 Sleep makes Hunger ---, energy+++, mood-
 
-Play(fetch) makes mood+, energy---, hunger---
+Play(fetch) makes mood+++, energy---, hunger---
 
-Walk makes energy --, hunger --
+Walk makes energy --, hunger --, mood++
 
 ----------------------------------------------------- 
 
-hunger, energy, mood all start at 100 int
+hunger, energy start at 100 int
+
 
 Dog class
 
@@ -47,25 +48,31 @@ private:
 	int mood
 	string name
 	
-	//mood modifiers will adjust how much mood is gained
-	static int happyMoodModifiers
-	static int badMoodModifiers
-	static int mehMoodModifiers
-	
+	checkMood() //should be called in each activity function, adjusts modifiers
+	checkStats() //check if any stat is too low or too high
+
 public
 	get/set hunger, mood, energy, name
 	get modifiers
+	get status as a string
 	eat()
 	sleep()
 	fetch()
 	walk()
 	printStats()
-	checkMood() //should be called in each activity function, adjusts modifiers
-	checkLoss() //check if any stat is too low
+	lowerMood() //called for each iteration in game loop
 	Dog(hunger, mood, energy) (constructor)
+
+	//mood modifiers will adjust how much mood is gained
+	static const int happyMoodModifiers
+	static const int badMoodModifiers
+	static const int mehMoodModifiers
 -----------------------------------------------------
 void doActivity(Dog &pet)
+void showActivities
 int checkStats(Dog &pet)
+void introduction();
+string nameDog();
 
 main class:
 
@@ -91,5 +98,5 @@ else
 doActivity end
 
 checkStats function:
-	return pet.checkLoss()
+	return 1,2 or 3 if loss based on stats
 checkStats end		
