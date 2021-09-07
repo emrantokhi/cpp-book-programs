@@ -13,5 +13,5 @@ private:
 public:
 	Farm(); //should have spaces to reserve to be more efficient
 	void listAllCritters();
-	void addCritter(Critter critter);
+	void addCritter(Critter critter); //should be a reference
 };
