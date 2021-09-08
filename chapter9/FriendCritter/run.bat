@@ -1,0 +1,2 @@
+FriendCritter
+pause
