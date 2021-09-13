@@ -10,7 +10,7 @@ Lobby::Lobby() {
 
 //destructor
 Lobby::~Lobby() {
-	delete player_head;
+	ClearLobby();
 }
 
 void Lobby::AddPlayer() {
@@ -52,7 +52,15 @@ void Lobby::ClearLobby() {
 		std::cout << "There are no players in the lobby to remove!\n\n";
 	}
 	else {
-		delete player_head;
+		Player* holder = player_head;
+		Player* toDelete = holder;
+		//if next is not empty, set holder to the next
+		while (holder->getNext() != 0) {
+			holder = holder->getNext();
+			delete toDelete;
+			toDelete = holder;
+		}
+		delete holder; //delete the last one
 		player_head = 0;
 	}
 }
