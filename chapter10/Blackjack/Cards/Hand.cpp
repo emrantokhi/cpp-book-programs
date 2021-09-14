@@ -4,7 +4,12 @@
 #include "Hand.h"
 
 Hand::Hand() {
-	cards = std::vector<Card>(2); //always going to have at least 2 cards in the beginning
+	score = 0;
+	//for loop to make sure time seed is different
+	for (int i = 0; i < 2; i++) {
+		Card card;
+		cards.push_back(card);
+	}
 	for (int i = 0; i < cards.size(); i++) {
 		score += cards[i].getValue();
 	}

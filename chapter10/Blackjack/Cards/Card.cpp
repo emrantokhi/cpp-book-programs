@@ -4,11 +4,9 @@
 #include "Card.h"
 
 Card::Card() {
-	srand(static_cast<unsigned int>(time(0)));
 	value = rand() % MAX_VALUE + 1; //guess range 1-MAXVALUE
 	setSuit(); //set the suit value
 	setCardName(value);
-	
 }
 
 int Card::getValue() const {
@@ -69,6 +67,6 @@ void Card::setCardName(int value) {
 		cardName = "Ace";
 	}
 	else {
-		cardName = "" + value;
+		cardName = std::to_string(value);
 	}
 }

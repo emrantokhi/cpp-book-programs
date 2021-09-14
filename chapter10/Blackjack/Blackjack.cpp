@@ -7,27 +7,40 @@ void introduction();
 int numPlayers();
 std::vector<Player*>* setPlayers();
 bool askPlayAgain();
-void playBlackJack(std::vector<Player*>* players);
+void playBlackJack(std::vector<Player*>* players, House* house);
 
 int main()
 {
+	//set seed in main so that it does not keep on calling and resetting seed
+	srand(static_cast<unsigned int>(time(0))); //set seed before player creation
+
 	introduction();
+
 	bool playAgain = true;
+	
 	while (playAgain) {
 		std::vector<Player*>* players = setPlayers();
-		playBlackJack(players);
+		House* house = new House();
+		playBlackJack(players, house);
 		delete players;
 		playAgain = askPlayAgain();
 	}
+
 	return 0;
 }
 
-void playBlackJack(std::vector<Player*>* players) {
+void playBlackJack(std::vector<Player*>* players, House* house) {
 	bool game = true;
 	while (game) {
+		//print the board
 		for (int i = 0; i < players->size(); i++) {
+			std::cout << (*players)[i]->getName() << ":\n";
 			(*players)[i]->printHand();
-			std::cout << "Score: " << (*players)[i]->getScore();
+			std::cout << "Score: " << (*players)[i]->getScore() << "\n";
+		}
+		std::cout << house->getName() << ":\n";
+		if (house->getReveal()) {
+			
 		}
 		game = false;
 	}
@@ -36,6 +49,7 @@ void playBlackJack(std::vector<Player*>* players) {
 void introduction() {
 	std::cout << "\t\tWelcome to Blackjack!\n";
 	std::cout << "The rules are simple, keep your score 21 or under and have a higher score than the house!\n";
+	std::cout << "Player amount: 1-7\n\n";
 }
 
 bool askPlayAgain() {
@@ -56,7 +70,7 @@ bool askPlayAgain() {
 //get number of players
 int numPlayers() {
 	int players = 0;
-	while (players < 1 && players > 7) {
+	while (players < 1 || players > 7) {
 		std::cout << "How many players are there: ";
 		std::cin >> players;
 	}
