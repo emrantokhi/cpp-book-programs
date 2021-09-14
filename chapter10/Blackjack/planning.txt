@@ -14,6 +14,7 @@
 players class
 	-string name
 	-Hand object
+	-Draw()
 
 Hand class
 	-vector of cards
