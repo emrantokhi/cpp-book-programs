@@ -1,0 +1,39 @@
+1) Players dealt 2 cards (including house) (house 1 card hidden)
+2) Aces are 1 or 11
+3) Kings, Queens, Jacks are 10, and 2-10 are what they are
+4) Each player gets to decide whether or not to take another card 
+5) If player reaches more than 21, then bust (player lose)
+6) after additional cards taken by players, house reveals hidden card. 
+7) house must take additional cards as long as total is 16 or less. 
+8) if house busts, all players who have not busted, win, otherwise lose. 
+9) if player's total is less than house, player lose
+10) if players total is greater than house, player win
+11) if totals are the same, then tie
+
+----------------------------------------------------------------------------
+players class
+	-string name
+	-Hand object
+
+Hand class
+	-vector of cards
+	-draw
+	-total score of hand
+	-getScore()
+	-printHand()
+
+Cards class
+	private:
+	-int value 
+	-string suit //heart, spades, diamonds, clubs
+	-string cardName //ace, jack, king, queen, or 2-10
+	-setSuit()
+	-setCardName()
+	public:
+	-Card() //will set everything randomly
+	-getSuit()
+	-getValue()
+	-getCardName()
+
+house class -extends player
+	-bool revealHand
