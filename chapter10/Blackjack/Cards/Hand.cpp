@@ -16,6 +16,13 @@ Hand::Hand() {
 }
 
 int Hand::getScore() const {
+	/*
+	if (card.getCardName() == "Ace") {
+		if (score + 1) {
+
+		}
+	}
+	*/ //Checking Ace done here
 	return score;
 }
 
@@ -26,11 +33,6 @@ void Hand::draw() {
 	else {
 		Card card;
 		cards.push_back(card); //push card into hand
-		if (card.getCardName() == "Ace") {
-			if (score + 1) {
-
-			}
-		}
 		score += card.getValue(); //add new card's value to score
 	}
 }
