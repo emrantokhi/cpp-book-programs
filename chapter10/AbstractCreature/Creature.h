@@ -8,6 +8,6 @@ protected:
 	int m_health;
 public:
 	Creature(int health = 100);
-	virtual void Greet() const = 0; //pure virtual member function
+	virtual void Greet() const = 0; //pure virtual member function, making this an abstract class
 	virtual void DisplayHealth() const;
 };
