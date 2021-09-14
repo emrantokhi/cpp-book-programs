@@ -9,6 +9,7 @@ private:
 	bool handReveal;
 public:
 	House();
-	void revealHand();
+	void revealHand(); //set bool to true
 	bool getReveal();
+	virtual void printHand() const;
 };

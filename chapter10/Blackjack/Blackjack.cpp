@@ -23,6 +23,9 @@ int main()
 		House* house = new House();
 		playBlackJack(players, house);
 		delete players;
+		delete house;
+		players = 0;
+		house = 0;
 		playAgain = askPlayAgain();
 	}
 
@@ -31,19 +34,18 @@ int main()
 
 void playBlackJack(std::vector<Player*>* players, House* house) {
 	bool game = true;
-	while (game) {
-		//print the board
-		for (int i = 0; i < players->size(); i++) {
-			std::cout << (*players)[i]->getName() << ":\n";
-			(*players)[i]->printHand();
-			std::cout << "Score: " << (*players)[i]->getScore() << "\n";
-		}
+	//print the board
+	for (int i = 0; i < players->size(); i++) {
+		//print player score
+		std::cout << (*players)[i]->getName() << ":\n";
+		(*players)[i]->printHand();
+		std::cout << "Score: " << (*players)[i]->getScore() << "\n";
+		
 		std::cout << house->getName() << ":\n";
-		if (house->getReveal()) {
-			
-		}
-		game = false;
+		house->printHand();
+		std::cout << "\n";
 	}
+	game = false;
 }
 
 void introduction() {

@@ -8,6 +8,7 @@ class Player {
 private:
 	std::string status;
 	std::string m_name;
+protected:
 	Hand* p_hand; //hand will be stored on heap
 public:
 	Player(const std::string& name); //constructor
@@ -16,6 +17,6 @@ public:
 	std::string getStatus() const;
 	int getScore() const;
 	void setStatus(std::string update);
-	void printHand() const;
+	virtual void printHand() const;
 	void draw(); //calls the hand's draw function
 };

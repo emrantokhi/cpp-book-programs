@@ -40,3 +40,7 @@ void Hand::printHand() const {
 		std::cout << cards[i].getCardName() << " " << cards[i].getSuit() << "    ";
 	}
 }
+
+std::vector<Card>* Hand::getCards() {
+	return &cards;
+}

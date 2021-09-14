@@ -13,5 +13,6 @@ public:
 	void draw();
 	int getScore() const;
 	void printHand() const;
+	std::vector<Card>* getCards();
 };
 
